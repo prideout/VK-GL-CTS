@@ -4,6 +4,108 @@ group varying "Varying linkage"
 
 	# Linking rules
 	group rules "Varying linking rules"
+
+		# Replace /sdcard/vk-default.txt with the following:
+		# dEQP-VK.glsl.linkage.varying.rules.adreno_error
+
+		case adreno_error
+			version 310 es
+			desc "tbd"
+			vertex ""
+				#version 310 es
+
+				invariant gl_Position;
+
+				layout(set = 0, binding = 0, std140) uniform _25_27
+				{
+					mat4 _m0;
+					mat4 _m1;
+					mat4 _m2;
+					mat4 _m3;
+					mat4 _m4;
+					mat4 _m5;
+					mat4 _m6;
+					vec4 _m7;
+					vec3 _m8;
+					float _m9;
+					mediump vec4 _m10;
+					mediump vec4 _m11;
+					mediump vec3 _m12;
+					mediump uint _m13;
+					mediump vec3 _m14;
+					mediump float _m15;
+					mediump vec4 _m16;
+					mediump uvec2 _m17;
+					mediump vec2 _m18;
+					mediump float _m19;
+					mediump float _m20;
+					mediump float _m21;
+					mediump float _m22;
+					mediump vec3 _m23[9];
+					mediump vec4 _m24;
+				} _27;
+
+				layout(set = 0, binding = 4, std140) uniform _35_37
+				{
+					mediump vec2 _m0;
+					mediump float _m1;
+					mediump float _m2;
+					mediump int _m3;
+				} _37;
+
+				layout(location = 0) out vec2 _9;
+				layout(location = 0) in vec4 _12;
+
+				void main()
+				{
+					_9 = ((_12.xy * 0.5) + vec2(0.5)) * _27._m7.xy;
+					_9.y += _37._m2;
+					gl_Position = _12;
+				}
+
+			""
+			fragment ""
+				#version 310 es
+				precision mediump float;
+				precision highp int;
+
+				layout(set = 0, binding = 4, std140) uniform _85_87
+				{
+					vec2 _m0;
+					float _m1;
+					float _m2;
+					mediump int _m3;
+				} _87;
+
+				layout(set = 1, binding = 5) uniform mediump sampler2D _125;
+
+				layout(location = 0) in highp vec2 _135;
+				layout(location = 0) out vec4 _180;
+
+				void main()
+				{
+					vec4 _212 = vec4(texelFetch(_125, ivec2(_135), 0).xyz, 1.0);
+					vec3 _214 = _212.xyz;
+					vec3 _240 = (_214 / (_214 + vec3(0.1550000011920928955078125))) * 1.01900005340576171875;
+					float _243 = dot(_240.xyz, vec3(0.2125999927520751953125, 0.715200006961822509765625, 0.072200000286102294921875));
+					vec4 _278 = vec4(_240.x, _240.y, _240.z, _212.w);
+					_278.w = _243;
+					vec4 _280;
+					if (_87._m3 > 0)
+					{
+						_280 = vec4(_278.xyz + vec3(((fract(52.98291778564453125 * fract(dot(vec2(0.067110002040863037109375, 0.0058400002308189868927001953125), gl_FragCoord.xy + vec2(_87._m1)))) * 2.0) - 1.0) * 0.0039215688593685626983642578125), _243);
+					}
+					else
+					{
+						_280 = _278;
+					}
+					_180 = _280;
+				}
+
+			""
+		end
+
+
 		# declared in vertex shader, no reference in frag shader
 		case vertex_declare
 			version 310 es
